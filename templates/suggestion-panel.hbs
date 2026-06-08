@@ -1,0 +1,77 @@
+<div class="third-action-body">
+
+  {{!-- Always-visible collapsed row --}}
+  <div class="third-action-collapsed-row">
+    <span class="third-action-hint">Show suggestions</span>
+    <button type="button" class="third-action-expand-btn" aria-label="Toggle suggestions">
+      <i class="fas fa-chevron-down"></i>
+    </button>
+  </div>
+
+  {{!-- Suggestion list - hidden until player expands --}}
+  <div class="third-action-suggestions" hidden>
+    <div class="third-action-list">
+      {{#each suggestions}}
+      <div class="third-action-item" style="--ta-category-color: {{this.categoryColor}}">
+
+        <div class="third-action-item-header">
+
+          {{!-- Left: category icon + name + AoN link --}}
+          <div class="third-action-item-left">
+            {{#if this.categoryIcon}}
+              <i class="fas {{this.categoryIcon}} action-category-icon"></i>
+            {{/if}}
+            <span class="action-name">{{this.name}}</span>
+            {{#if this.source}}
+              <a class="action-source-link" href="{{this.source}}" target="_blank"
+                 title="View on Archives of Nethys">
+                <i class="fas fa-arrow-up-right-from-square"></i>
+              </a>
+            {{/if}}
+          </div>
+
+          {{!-- Right: action cost + roll button or variant picker --}}
+          <div class="third-action-item-right">
+            <span class="action-diamonds">{{this.diamonds}}</span>
+
+            {{#if this.variants}}
+              {{!-- Variant sub-menu for Create a Diversion --}}
+              <details class="third-action-variant-picker">
+                <summary class="third-action-roll-btn" title="Choose variant for {{this.name}}">
+                  <i class="fas fa-dice-d20"></i>
+                </summary>
+                <ul class="third-action-variant-list">
+                  {{#each this.variants}}
+                  <li data-variant="{{this.id}}" data-slug="{{../slug}}">{{this.label}}</li>
+                  {{/each}}
+                </ul>
+              </details>
+            {{else}}
+              <button type="button"
+                      class="third-action-roll-btn {{#if this.isChatOnly}}is-chat-only{{/if}}"
+                      data-slug="{{this.slug}}"
+                      data-needs-target="{{this.needsTarget}}"
+                      title="{{#if this.isChatOnly}}Info: {{this.name}}{{else}}Roll {{this.name}}{{/if}}">
+                {{#if this.isChatOnly}}
+                  <i class="fas fa-circle-info"></i>
+                {{else}}
+                  <i class="fas fa-dice-d20"></i>
+                {{/if}}
+              </button>
+            {{/if}}
+
+          </div>
+        </div>
+
+        {{!-- Skill rank badge --}}
+        {{#if this.skillLabel}}
+          <p class="action-skill-rank">{{this.skillLabel}}</p>
+        {{/if}}
+
+        <p class="action-why">{{this.why}}</p>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+</div>
