@@ -95,6 +95,8 @@ Requires **Foundry VTT v13** or later.
 Created by **Vachna**.
 Action rules verified against [Archives of Nethys](https://2e.aonprd.com) (Remaster).
 
+This module was designed and built with the assistance of [Claude](https://claude.ai) (Anthropic). All game rules, action descriptions, and PF2E mechanics were verified by a human against official sources.
+
 ---
 
 ## License
