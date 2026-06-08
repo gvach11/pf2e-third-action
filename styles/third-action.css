@@ -2,7 +2,7 @@
    PF2E Third Action Suggester — ApplicationV2 styles
    ═══════════════════════════════════════════════════════════════ */
 
-#pf2e-third-action-panel {
+#pf2e-third-action-suggester-panel {
   --ta-gold:    #c9a84c;
   --ta-red:     #8b1a1a;
   --ta-dark:    #1a1814;
@@ -16,14 +16,14 @@
 }
 
 /* ── Window chrome ─────────────────────────────────────────────── */
-#pf2e-third-action-panel .window-header {
+#pf2e-third-action-suggester-panel .window-header {
   background: linear-gradient(135deg, #2e2318 0%, #1a1410 100%);
   border-bottom: 1px solid var(--ta-border);
   border-radius: 4px 4px 0 0;
   padding: 5px 10px;
 }
 
-#pf2e-third-action-panel .window-title {
+#pf2e-third-action-suggester-panel .window-title {
   color: var(--ta-gold);
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-size: 0.85rem;
@@ -31,15 +31,15 @@
   letter-spacing: 0.02em;
 }
 
-#pf2e-third-action-panel .window-header .header-control {
+#pf2e-third-action-suggester-panel .window-header .header-control {
   color: var(--ta-muted);
 }
 
-#pf2e-third-action-panel .window-header .header-control:hover {
+#pf2e-third-action-suggester-panel .window-header .header-control:hover {
   color: var(--ta-gold);
 }
 
-#pf2e-third-action-panel .window-content {
+#pf2e-third-action-suggester-panel .window-content {
   background: var(--ta-dark);
   padding: 0;
   border-radius: 0 0 4px 4px;

@@ -14,7 +14,7 @@ Hooks.once('init', () => {
     ['stealth',   'Stealth Actions',                         'Sneak'],
   ];
   for (const [key, name, hint] of CATEGORIES) {
-    game.settings.register('pf2e-third-action', `cat-${key}`, {
+    game.settings.register('pf2e-third-action-suggester', `cat-${key}`, {
       name,
       hint,
       scope: 'world',
@@ -25,7 +25,7 @@ Hooks.once('init', () => {
   }
 
   // ── Minimum skill rank threshold ────────────────────────────────────────────
-  game.settings.register('pf2e-third-action', 'minRank', {
+  game.settings.register('pf2e-third-action-suggester', 'minRank', {
     name: 'Minimum Skill Rank for Suggestions',
     hint: 'Only suggest trained-skill actions if the actor meets this proficiency rank. Untrained actions (Escape, Grapple, etc.) always appear.',
     scope: 'world',
@@ -36,7 +36,7 @@ Hooks.once('init', () => {
   });
 
   // ── Auto-open on turn start ─────────────────────────────────────────────────
-  game.settings.register('pf2e-third-action', 'autoTrigger', {
+  game.settings.register('pf2e-third-action-suggester', 'autoTrigger', {
     name: 'Auto-Open Panel on Turn Start',
     hint: "Automatically show the suggestion panel at the start of a combatant's turn. Disable to open it manually with the keybind only.",
     scope: 'client',
@@ -46,7 +46,7 @@ Hooks.once('init', () => {
   });
 
   // ── Keybind: manual panel toggle ────────────────────────────────────────────
-  game.keybindings.register('pf2e-third-action', 'togglePanel', {
+  game.keybindings.register('pf2e-third-action-suggester', 'togglePanel', {
     name: 'Toggle Suggestion Panel',
     hint: 'Open or close the Third Action suggestion panel during combat.',
     editable: [{ key: 'KeyS', modifiers: ['Alt', 'Shift'] }],
@@ -73,7 +73,7 @@ Hooks.once('ready', () => {
   console.log('PF2E Third Action Suggester | Ready');
   // Restore panel after a page refresh if combat is already running and it's
   // the user's turn (or a GM-controlled combatant).
-  if (!game.settings.get('pf2e-third-action', 'autoTrigger')) return;
+  if (!game.settings.get('pf2e-third-action-suggester', 'autoTrigger')) return;
   const combat = game.combat;
   if (!combat?.started) return;
   const actor = combat.combatant?.actor;
@@ -98,7 +98,7 @@ Hooks.on('updateCombat', (combat, changed, _options, _userId) => {
   if (!actor) return;
   if (!game.user.isGM && !actor.isOwner) return;
   if (_activePanel) { _activePanel.close(); _activePanel = null; }
-  if (!game.settings.get('pf2e-third-action', 'autoTrigger')) return;
+  if (!game.settings.get('pf2e-third-action-suggester', 'autoTrigger')) return;
   const suggestions = getSuggestions(actor);
   if (suggestions.length === 0) return;
   _activePanel = new ThirdActionPanel(actor, suggestions);
@@ -119,14 +119,14 @@ class ThirdActionPanel extends foundry.applications.api.HandlebarsApplicationMix
   }
 
   static DEFAULT_OPTIONS = {
-    id: 'pf2e-third-action-panel',
-    classes: ['pf2e-third-action'],
+    id: 'pf2e-third-action-suggester-panel',
+    classes: ['pf2e-third-action-suggester'],
     position: { width: 360, height: 'auto' },
     window: { resizable: false, minimizable: true, icon: 'fa-solid fa-hand-fist' }
   };
 
   static PARTS = {
-    main: { template: 'modules/pf2e-third-action/templates/suggestion-panel.hbs' }
+    main: { template: 'modules/pf2e-third-action-suggester/templates/suggestion-panel.hbs' }
   };
 
   get title() {
@@ -217,16 +217,16 @@ class ThirdActionPanel extends foundry.applications.api.HandlebarsApplicationMix
   // ── Persistent state helpers (localStorage) ─────────────────────
   static _saveState(partial) {
     const current = ThirdActionPanel._loadState() ?? {};
-    localStorage.setItem('pf2e-third-action-state', JSON.stringify(Object.assign(current, partial)));
+    localStorage.setItem('pf2e-third-action-suggester-state', JSON.stringify(Object.assign(current, partial)));
   }
 
   static _loadState() {
-    try { return JSON.parse(localStorage.getItem('pf2e-third-action-state')); }
+    try { return JSON.parse(localStorage.getItem('pf2e-third-action-suggester-state')); }
     catch { return null; }
   }
 
   static _clearState() {
-    localStorage.removeItem('pf2e-third-action-state');
+    localStorage.removeItem('pf2e-third-action-suggester-state');
   }
 
   _rollAction(slug, needsTarget, overrideOpts = {}) {
@@ -444,12 +444,12 @@ function readBattlefieldContext(actor) {
 function getSuggestions(actor) {
   const profile = readProfile(actor);
   const results = [];
-  const minRank = game.settings.get('pf2e-third-action', 'minRank');
+  const minRank = game.settings.get('pf2e-third-action-suggester', 'minRank');
   for (const rule of RULES) {
     // Category filter
     if (rule.category) {
       try {
-        if (!game.settings.get('pf2e-third-action', `cat-${rule.category}`)) continue;
+        if (!game.settings.get('pf2e-third-action-suggester', `cat-${rule.category}`)) continue;
       } catch { /* settings not yet registered — skip filter */ }
     }
     // Minimum skill rank filter (only applies to actions with a skill requirement > 0)

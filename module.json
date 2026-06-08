@@ -1,5 +1,5 @@
 {
-  "id": "pf2e-third-action",
+  "id": "pf2e-third-action-suggester",
   "title": "PF2E Third Action Suggester",
   "description": "Suggests smart third actions for PF2E characters and NPCs in combat, based on their abilities, skills, feats, equipped items, and the current battlefield situation. Appears automatically on your turn with colour-coded, rollable suggestions.",
   "version": "1.0.0",
@@ -16,9 +16,9 @@
       "url": "https://github.com/gvach11"
     }
   ],
-  "url": "https://github.com/gvach11/pf2e-third-action",
-  "manifest": "https://raw.githubusercontent.com/gvach11/pf2e-third-action/main/module.json",
-  "download": "https://github.com/gvach11/pf2e-third-action/releases/download/v1.0.0/pf2e-third-action.zip",
+  "url": "https://github.com/gvach11/pf2e-third-action-suggester",
+  "manifest": "https://raw.githubusercontent.com/gvach11/pf2e-third-action-suggester/main/module.json",
+  "download": "https://github.com/gvach11/pf2e-third-action-suggester/releases/download/v1.0.0/pf2e-third-action-suggester.zip",
   "esmodules": [
     "scripts/main.js"
   ],
